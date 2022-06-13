@@ -1,0 +1,35 @@
+<!-- product -->
+ <div class="product">
+        <div class="product-img">
+            <div class="img_wrap">
+                <img src="{{ product.preview.url }}">
+            </div>
+            <div class="product-label">
+                <span class="sale">-30%</span>
+                <span class="new">NEW</span>
+            </div>
+        </div>
+        <div class="product-body">
+            <p class="product-category">{{ product.category }}</p>
+            <h3 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+            <h4 class="product-price">${{ product.price }} <del class="product-old-price">{% if product.old_price %}${{ product.old_price }}{% endif %}</del></h4>
+            <div class="product-rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+            <div class="product-btns">
+                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">В список уподобань</span></button>
+            </div>
+        </div>
+        <div class="add-to-cart">
+            <form action="{% url 'cart_add' product.id%}" method="post">
+                {% csrf_token %}
+                {{ cart_form.quantity.as_hidden  }}
+                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Додати в кошик</button>
+            </form>
+        </div>
+    </div>
+<!-- /product -->
