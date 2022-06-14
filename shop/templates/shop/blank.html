@@ -123,10 +123,10 @@
                                 </div>
                                 <div class="cart-summary">
                                     <small>{{ cart|length }} Товари вибрано</small>
-                                    <h5>Всього: ${{ cart.price }}</h5>
+                                    <h5>Всього: ${{ cart.get_total_price }}</h5>
                                 </div>
                                 <div class="cart-btn">
-                                    <a href="#">Далі <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="{% url 'order_create' %}">Далі <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
