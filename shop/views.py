@@ -36,3 +36,8 @@ def category_page(request, category_name: str):
     """В'юшка для показу всіх товарів окремої категорії"""
     context = main_services.generate_category_page(category_name)
     return render(request, 'shop/products.html', context)
+
+
+def categories_page(request):
+    """Показує всі категорії"""
+    pass
