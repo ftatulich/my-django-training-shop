@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'DjangoShop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.s    qlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
