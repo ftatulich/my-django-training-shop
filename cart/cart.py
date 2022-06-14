@@ -14,7 +14,6 @@ class Cart(object):
             cart = self.session[settings.CART_SESSION_ID] = {}
 
         self.cart = cart
-        self.price = 0
 
     def add(self, product: Product, quantity: int = 1, update_quantity: bool = False):
         """Додаємо товар у кошик, або обновляємо його кількість"""
@@ -56,7 +55,6 @@ class Cart(object):
         for item in self.cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
-            self.price += item['total_price']
 
             yield item
 
@@ -68,3 +66,8 @@ class Cart(object):
         """Очищує кошик"""
         del self.session[settings.CART_SESSION_ID]
         self.session.modified = True
+
+    def get_total_price(self):
+        """Подсчет стоимости товаров в корзине."""
+        return sum(Decimal(item['price']) * item['quantity'] for item in
+                   self.cart.values())
