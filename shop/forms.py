@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Product
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -34,46 +34,69 @@ class RegisterForm(forms.ModelForm):
 
     class Meta(object):
         model = CustomUser
-        fields = ('first_name', 'last_name', 'email', 'address', 'city', 'country', 'zip_code', 'password')
+        fields = ('username', 'first_name', 'last_name', 'email', 'address', 'city', 'country', 'zip_code', 'password')
         widgets = {
+            'username': forms.TextInput(attrs={'class': "input",
+                                               "type": "text",
+                                               'name': "first-name",
+                                               'placeholder': "Ім'я користувача"
+                                               }),
             'first_name': forms.TextInput(attrs={'class': "input",
                                                  "type": "text",
                                                  'name': "first-name",
-                                                 'placeholder': "First Name"
+                                                 'placeholder': "Ім'я"
                                                  }),
             'last_name': forms.TextInput(attrs={'class': "input",
                                                 "type": "text",
                                                 'name': "last-name",
-                                                'placeholder': "Last Name"
+                                                'placeholder': "Прізвище"
                                                 }),
             'email': forms.TextInput(attrs={'class': "input",
                                             "type": "email",
                                             'name': "email",
-                                            'placeholder': "Email"
+                                            'placeholder': "Електронна пошта"
                                             }),
             'address': forms.TextInput(attrs={'class': "input",
                                               'type': "text",
                                               'name': "address",
-                                              'placeholder': "Address"
+                                              'placeholder': "Адреса"
                                               }),
             'city': forms.TextInput(attrs={'class': "input",
                                            'type': "text",
                                            'name': "city",
-                                           'placeholder': "City"
+                                           'placeholder': "Місто"
                                            }),
             'country': forms.TextInput(attrs={'class': "input",
                                               'type': "text",
                                               'name': "county",
-                                              'placeholder': "Country"
+                                              'placeholder': "Країна"
                                               }),
             'zip_code': forms.TextInput(attrs={'class': "input",
                                                'type': "text",
                                                'name': "zip-code",
-                                               'placeholder': "ZIP Code"
+                                               'placeholder': "Поштовий Індекс"
                                                }),
             'password': forms.PasswordInput(attrs={'class': "input",
                                                    'type': "password",
                                                    'name': "address",
-                                                   'placeholder': "Password"
+                                                   'placeholder': "Пароль"
                                                    })
+        }
+
+
+class AddProductForm(forms.ModelForm):
+    class Meta(object):
+        model = Product
+        fields = ('name', 'price', 'amount', 'description', 'category', 'preview')
+        widgets = {
+            'name': forms.TextInput(attrs={'class': "input",
+                                           "type": "text",
+                                           'placeholder': "Назва товару"
+                                           }),
+            'price': forms.TextInput(attrs={'class': "input",
+                                            "type": "text",
+                                            'placeholder': "Ціна"
+                                            }),
+            'amount': forms.NumberInput(attrs={'class': "input"}),
+            'preview': forms.FileInput(),
         }

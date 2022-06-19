@@ -28,8 +28,7 @@ def cart_remove(request, product_id: int):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
-    return redirect(request.META.get('HTTP_REFERER')
-                    )
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 def cart_detail(request):

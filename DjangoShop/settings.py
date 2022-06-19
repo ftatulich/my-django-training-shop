@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'shop',
     'cart',
     'orders',
+    'wishlist',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,4 @@ INTERNAL_IPS = [
 ]
 
 CART_SESSION_ID = 'cart'
+WISHLIST_SESSION_ID = 'wishlist'

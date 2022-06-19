@@ -6,7 +6,7 @@ class Order(models.Model):
     """Інформація про замолення"""
     first_name = models.CharField("first name", max_length=150)
     last_name = models.CharField("last name", max_length=150)
-    email = models.EmailField("email address", unique=True, db_index=True)
+    email = models.EmailField("email address", db_index=True)
     address = models.TextField("user`s address")
     city = models.TextField('user`s city')
     country = models.TextField('user`s country')

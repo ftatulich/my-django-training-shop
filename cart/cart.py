@@ -15,7 +15,7 @@ class Cart(object):
 
         self.cart = cart
 
-    def add(self, product: Product, quantity: int = 1, update_quantity: bool = False):
+    def add(self, product: Product, quantity: int = 1, update_quantity: bool = False) -> None:
         """Додаємо товар у кошик, або обновляємо його кількість"""
         product_id = str(product.id)
         if product_id not in self.cart:

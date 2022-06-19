@@ -1,0 +1,42 @@
+{% extends 'shop/blank.html' %}
+
+{% block content%}
+<div class="container">
+    <h1>{{request.user.username}}</h1>
+    <nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav">
+						<li><a href="#">Редагувати профіль</a></li>
+						<li><a href="{% url 'add_product' %}">Додати товар</a></li>
+                        <li><a href="">Мої Замовлення</a></li>
+                        <li><a href="">Замовлення моїх товарів</a></li>
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+    <div class="section">
+        <h2>Мої товари</h2>
+        {% if products %}
+           <div id="store" class="col-md-15">
+              <div class="row">
+                {% for product in products %}
+                    <div class="col-md-3 col-xs-6">
+                    {% include 'shop/_product.html' with product=product category=category %}
+                    </div>
+                {% endfor %}
+                </div>
+         </div>
+        {% else %}
+        <br>
+            <p>Ви не виставили ні одного товару.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class CustomUser(AbstractUser, PermissionsMixin):
     """Кастомна модель користувача"""
-    username = models.CharField("username", unique=False, max_length=32)
+    username = models.CharField("username", unique=True, max_length=32)
     first_name = models.CharField("first name", max_length=150)
     last_name = models.CharField("last name", max_length=150)
     email = models.EmailField("email address", unique=True, db_index=True)
@@ -29,10 +29,9 @@ class Product(models.Model):
     """Модель товару на сайті"""
     name = models.CharField("product name", max_length=48)
     price = models.FloatField('product price', blank=False)
-    old_price = models.FloatField('price before set discount', default=None)
+    old_price = models.FloatField('price before set discount', default=None, blank=True, null=True)
     amount = models.IntegerField('number of copies of the product', default=0)
     description = models.TextField('product description', default='Немає опису :( ')
-    details = models.TextField('product details', default='Характристики не вказані')
     date = models.DateField('Product publicattion date', auto_now=True)
     category = models.ForeignKey('Category', related_name='product', on_delete=models.PROTECT, db_index=True)
     preview = models.ImageField(verbose_name='products preview', upload_to='photos/products/%Y/%m/%d')

@@ -74,7 +74,9 @@
 
                     <ul class="product-links">
                         <li>Category:</li>
-                        <li><a href="#">{{ product.category }}</a></li>
+                        <li><a href="{% url 'category' product.category %}">{{ product.category }}</a></li>
+                        <li>Продавець:</li>
+                        <li><a href="{% url 'profile' product.seller.username %}">{{ product.seller.username }}</a></li>
                     </ul>
 
                     <ul class="product-links">
