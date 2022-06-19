@@ -4,7 +4,6 @@ from .wishlist import Wishlist
 
 def wishlist_page(request):
     """Показує всі товари за якими слідкує користувач"""
-    print(dict(request.session))
     return render(request, 'wishlist/wishlist.html')
 
 

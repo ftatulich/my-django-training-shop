@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.forms import ValidationError
-from shop.forms import RegisterForm
+from shop.forms.profile_forms import RegisterForm
 
 htmlresponse = str
 

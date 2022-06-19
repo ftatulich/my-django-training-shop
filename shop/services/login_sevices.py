@@ -1,7 +1,7 @@
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from shop.forms import LoginForm
+from shop.forms.profile_forms import LoginForm
 from shop.models import CustomUser
 
 

@@ -118,7 +118,7 @@
                             <div class="cart-dropdown">
                                 <div class="cart-list">
                                     {% for cart_product in cart %}
-                                        {% include 'shop/_cart_product.html' with product=cart_product %}
+                                        {% include 'shop/_cart_product.html' with item=cart_product %}
                                     {% endfor %}
                                 </div>
                                 <div class="cart-summary">

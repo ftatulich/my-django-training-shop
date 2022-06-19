@@ -1,0 +1,27 @@
+{% extends 'shop/blank.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h3>Редагувати Інформацію про товар</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="billing-details">
+                     {% for field in form %}
+                    <div class="form-group">
+                        {{ field }}
+                        {% for error in field.errors%}
+                            <div class="form-group">
+                            <h4>{{ error }}</h4>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <div class="form-group">
+                          <input type="submit" value="Зберегти" class="primary-btn">
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

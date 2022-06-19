@@ -14,13 +14,13 @@ class Cart(object):
 
         self.cart = cart
 
-    def add(self, product: Product, quantity: int = 1, update_quantity: bool = False) -> None:
+    def add(self, product_id: int, product_price: int, quantity: int = 1, update_quantity: bool = False) -> None:
         """Додаємо товар у кошик, або обновляємо його кількість"""
-        product_id = str(product.id)
+        product_id = str(product_id)
         if product_id not in self.cart:
             self.cart[product_id] = {
                 'quantity': 0,
-                'price': str(product.price)
+                'price': str(product_price)
             }
 
         if update_quantity:
@@ -35,31 +35,39 @@ class Cart(object):
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
 
-    def remove(self, product: Product):
+    def remove(self, product_id: int):
         """Видалення товару з кошику"""
-        product_id = str(product.id)
+        product_id = str(product_id)
         if product_id in self.cart:
             del self.cart[product_id]
 
             self.save()
 
     def __iter__(self):
-        """Перебір об'єктів Product і додавання їх в кошик"""
+        """Ітератор який повертає товар з кошику його ціну та кількість"""
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
 
         for product in products:
-            self.cart[str(product.id)]['product'] = product
+            self.cart[str(product.id)]['product'] = {
+                'id': product.id,
+                'photo': product.preview.url,
+                'name': product.name,
+            }
 
-        for item in self.cart.values():
-            item['price'] = float(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
+        for key in list(self.cart):
+            self.cart[key]['price'] = float(self.cart[key]['price'])
+            self.cart[key]['total_price'] = self.cart[key]['price'] * self.cart[key]['quantity']
 
-            yield item
+            if not self.cart[key].get('product'):
+                del self.cart[key]
+                continue
+
+            yield self.cart[key]
 
     def __len__(self):
         """Кількість товарів в кошику"""
-        return sum(item['quantity'] for item in self.cart.values())
+        return len(self.cart.keys())
 
     def clear(self):
         """Очищує кошик"""
@@ -68,5 +76,4 @@ class Cart(object):
 
     def get_total_price(self):
         """Подсчет стоимости товаров в корзине."""
-        return sum(float(item['price']) * item['quantity'] for item in
-                   self.cart.values())
+        return sum(float(item['price']) * item['quantity'] for item in self.cart.values())

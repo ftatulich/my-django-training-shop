@@ -1,10 +1,10 @@
 <div class="product-widget">
     <div class="product-img">
-        <img src="{{ product.product.preview.url }}" alt="">
+        <img src="{{ item.product.photo }}" alt="">
     </div>
     <div class="product-body">
-        <h3 class="product-name"><a href="{{ product.product.get_absolute_url }}">{{ product.product.name }}</a></h3>
-        <h4 class="product-price"><span class="qty">{{ product.quantity }}x</span>${{ product.total_price }}</h4>
+        <h3 class="product-name"><a href="{% url 'product' item.product.id %}">{{ item.product.name }}</a></h3>
+        <h4 class="product-price"><span class="qty">{{ item.quantity }}x</span>${{ item.total_price }}</h4>
     </div>
-    <a class="delete" href="{% url 'cart_remove' product.product.id %}"><i class="fa fa-close"></i></a>
+    <a class="delete" href="{% url 'cart_remove' product_id=item.product.id %}"><i class="fa fa-close"></i></a>
 </div>

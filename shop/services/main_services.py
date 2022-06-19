@@ -4,22 +4,6 @@ from django.shortcuts import get_object_or_404
 from shop.models import Product, Category
 
 
-def generate_product_page(product_id: int) -> dict:
-    """Бере з БД інфу для продукту, і рендерить шаблон для сторінки цього продукту"""
-    product = get_object_or_404(Product.objects.select_related('category', 'seller').prefetch_related('images'), pk=product_id)
-    try:
-        related_products = Product.objects.select_related('category').all().order_by('date')[:10]
-    except Product.DoesNotExist:
-        raise Http404('No %s matches the given query.')
-
-    context = {
-        'product': product,
-        'related_products': related_products,
-    }
-
-    return context
-
-
 def generate_category_page(category_name: str) -> dict:
     """Повертає інфу всіх товарів деякої категорії"""
     try:
