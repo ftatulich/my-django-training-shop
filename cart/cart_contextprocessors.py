@@ -1,5 +1,5 @@
-from cart.cart import Cart
-from cart.forms import CartAddProductForm
+from .cart import Cart
+from .forms import CartAddProductForm
 
 
 def cart_context(request) -> dict[str: Cart, str: CartAddProductForm]:

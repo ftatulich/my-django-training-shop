@@ -59,12 +59,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                'cart.cart_contextprocessors.cart_context'
             ],
         },
     },
 ]
+
+TEMPLATES[0]['OPTIONS']['context_processors'] += ['cart.cart_contextprocessors.cart_context']
+TEMPLATES[0]['OPTIONS']['context_processors'] += ['wishlist.wishlistcontext.context']
+
 
 WSGI_APPLICATION = 'DjangoShop.wsgi.application'
 

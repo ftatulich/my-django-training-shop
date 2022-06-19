@@ -21,11 +21,15 @@
                 <i class="fa fa-star"></i>
             </div>
             <div class="product-btns">
-                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">В список уподобань</span></button>
+                {% if product.pk not in wishlist.wishlist %}
+                    <a class="add-to-wishlist" href="{% url 'add_wishlist' product.pk %}"><i class="fa fa-heart-o"></i></a>
+                {% else %}
+                    <a class="add-to-wishlist" href="{% url 'remove_wishlist' product.pk %}"><i class="fa fa-heart"></i></a>
+                {% endif %}
             </div>
         </div>
         <div class="add-to-cart">
-            <form action="{% url 'cart_add' product.id%}" method="post">
+            <form action="{% url 'cart_add' product.id %}" method="post">
                 {% csrf_token %}
                 {{ cart_form.quantity.as_hidden  }}
                 <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Додати в кошик</button>

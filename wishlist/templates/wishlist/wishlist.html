@@ -1,0 +1,20 @@
+{% extends 'shop/blank.html' %}
+
+{% block content %}
+    <div class="container">
+        <div id="store" class="col-md-12">
+            <h5><a href="{% url 'clear_wishlist' %}">Очистити</a></h5>
+            <div class="row">
+                {% if wishlist.wishlist %}
+                    {% for product in wishlist %}
+                        <div class="col-md-3 col-xs-6">
+                            {% include 'shop/_product.html' with product=product %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h5>Список уподобань порожній</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

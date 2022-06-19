@@ -69,10 +69,15 @@
                     </div>
 
                     <ul class="product-btns">
-                        <li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
+                        {% if product not in wishlist %}
+                            <li><a href="{% url 'add_wishlist' product.id %}"><i class="fa fa-heart-o"></i> В список уподобань</a></li>
+                        {% else %}
+                            <li><a href="{% url 'remove_wishlist' product.id %}"><i class="fa fa-heart"></i> Зі списку уподобань</a></li>
+                        {% endif %}
                     </ul>
 
                     <ul class="product-links">
+
                         <li>Category:</li>
                         <li><a href="{% url 'category' product.category %}">{{ product.category }}</a></li>
                         <li>Продавець:</li>

@@ -1,17 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .wishlist import Wishlist
 
 
-def wishlist(request):
-    pass
+def wishlist_page(request):
+    """Показує всі товари за якими слідкує користувач"""
+    print(dict(request.session))
+    return render(request, 'wishlist/wishlist.html')
 
 
-def add_wishlist(request):
-    pass
+def add_wishlist(request, product_id: int):
+    wishlist = Wishlist(request)
+    wishlist.add(product_id)
+
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
-def remove_wishlist(request):
-    pass
+def remove_wishlist(request, product_id: int):
+    wishlist = Wishlist(request)
+    wishlist.remove(product_id)
+
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 def clear_wishlist(request):
-    pass
+    wishlist = Wishlist(request)
+    wishlist.clear()
+
+    return redirect(request.META.get('HTTP_REFERER'))

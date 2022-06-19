@@ -16,12 +16,10 @@ class Wishlist(object):
 
     def add(self, product_id: int) -> None:
         """Додаємо айдішник товарів в список"""
-        product_id = str(product_id)
-
         if product_id not in self.wishlist:
             self.wishlist.append(product_id)
 
-            self.save()
+        self.save()
 
     def save(self) -> None:
         """Зберігає зміни в сессії"""
@@ -30,21 +28,20 @@ class Wishlist(object):
 
     def remove(self, product_id: int) -> None:
         """видаляє товар зі списку товарів"""
-        product_id = str(product_id)
         if product_id in self.wishlist:
             self.wishlist.remove(product_id)
 
-            self.save()
+        self.save()
 
     def __iter__(self):
-        products = Product.objects.select_related('category').filter(id__in=self.wishlist)
+        products = Product.objects.filter(id__in=self.wishlist)
 
         for product in products:
             yield product
 
     def clear(self):
         del self.session[settings.WISHLIST_SESSION_ID]
-        self.save()
+        self.session.modified = True
 
     def __len__(self):
         return len(self.wishlist)

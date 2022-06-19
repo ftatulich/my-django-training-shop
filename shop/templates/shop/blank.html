@@ -100,10 +100,10 @@
                     <div class="header-ctn">
                         <!-- Wishlist -->
                         <div>
-                            <a href="#">
+                            <a href="{% url 'wishlist' %}">
                                 <i class="fa fa-heart-o"></i>
-                                <span>Your Wishlist</span>
-                                <div class="qty">2</div>
+                                <span>Слідкування</span>
+                                <div class="qty">{{ wishlist|length }}</div>
                             </a>
                         </div>
                         <!-- /Wishlist -->
@@ -112,7 +112,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
+                                <span>Кошик</span>
                                 <div class="qty">{{ cart|length }}</div>
                             </a>
                             <div class="cart-dropdown">
@@ -185,7 +185,7 @@
                         {% if bread == breads|last %}
                             <li class="active">{{ bread }}</li>
                         {% else %}
-                            <li><a href={% url bread %}>{{ bread }}</a></li>
+                            <li>{{ bread }}</li>
                         {% endif %}
                     {% endfor %}
                 </ul>
