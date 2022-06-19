@@ -1,5 +1,7 @@
 import os.path
 from pathlib import Path
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -136,3 +138,6 @@ INTERNAL_IPS = [
 
 CART_SESSION_ID = 'cart'
 WISHLIST_SESSION_ID = 'wishlist'
+
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
