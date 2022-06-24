@@ -18,7 +18,6 @@ def card_add(request, product_id: int):
         cart.add(product_id=product.id,
                  product_price=product.price,
                  quantity=cleand_form_data['quantity'],
-                 update_quantity=cleand_form_data['update']
                  )
 
     return redirect(request.META.get('HTTP_REFERER'))
@@ -28,4 +27,10 @@ def cart_remove(request, product_id: int):
     """Видаляє продукт з кошику"""
     cart = Cart(request)
     cart.remove(product_id)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
     return redirect(request.META.get('HTTP_REFERER'))

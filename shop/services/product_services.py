@@ -10,7 +10,7 @@ def generate_product_page(product_id: int) -> dict:
     """Бере з БД інфу для продукту, і рендерить шаблон для сторінки цього продукту"""
     product = get_product_by_id(product_id)
     try:
-        related_products = Product.objects.select_related('category').all().order_by('date')[:10]
+        related_products = Product.objects.select_related('category').all().order_by('date')[:10].prefetch_related('images')
     except Product.DoesNotExist:
         raise Http404('No %s matches the given query.')
 
@@ -43,10 +43,9 @@ def get_product_by_id(id: int) -> Product:
     return get_object_or_404(Product.objects.select_related('category', 'seller'), pk=id)
 
 
-def save_product_changes_if_form_valid(request, product):
+def save_edit_product_changes(request, product):
     form = EditProductForm(request.POST, instance=product)
     if form.is_valid():
         form.save()
         return redirect(reverse('product', args=[product.pk]))
     return render(request, 'shop/edit_product.html', {'form': form})
-

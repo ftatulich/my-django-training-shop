@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-n-dx#@57$hun&u*k+zxql-0@5bgfs1$ncl_*!9u**q0i4u7n=#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['shopdjango.herokuapp.com', '*']
 
 # Application definition
 
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'wishlist',
+    'search',
 ]
 
 MIDDLEWARE = [
@@ -61,13 +62,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'search.search_context.context',
+                'wishlist.wishlistcontext.context',
+                'cart.cart_contextprocessors.cart_context',
             ],
         },
     },
 ]
-
-TEMPLATES[0]['OPTIONS']['context_processors'] += ['cart.cart_contextprocessors.cart_context']
-TEMPLATES[0]['OPTIONS']['context_processors'] += ['wishlist.wishlistcontext.context']
 
 
 WSGI_APPLICATION = 'DjangoShop.wsgi.application'
@@ -138,6 +140,3 @@ INTERNAL_IPS = [
 
 CART_SESSION_ID = 'cart'
 WISHLIST_SESSION_ID = 'wishlist'
-
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)

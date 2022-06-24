@@ -7,6 +7,8 @@ urlpatterns = [
     path('orders/', include('orders.urls')),
     path('cart/', include('cart.urls')),
     path('wishlist/', include('wishlist.urls')),
+    path('search/', include('search.urls')),
+
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
 ]

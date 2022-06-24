@@ -1,0 +1,95 @@
+{% extends 'shop/blank.html' %}
+
+{% block content %}
+   <div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div id="aside" class="col-md-3">
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Категорії</h3>
+							<div class="checkbox-filter">
+								<div class="input-checkbox">
+									<input type="checkbox" id="category-1">
+									<label for="category-1">
+										<span></span>
+										Laptops
+										<small>(120)</small>
+									</label>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->
+
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Ціна</h3>
+							<div class="price-filter">
+                                <div id="price-slider" class="noUi-target noUi-ltr noUi-horizontal">
+                                    <div class="noUi-base">
+                                        <div class="noUi-origin" style="left: 0;">
+                                            <div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="100.0" aria-valuenow="0.0" aria-valuetext="1.00" style="z-index: 5;"></div>
+                                        </div>
+                                        <div class="noUi-connect" style="left: 0; right: 0;"></div>
+                                        <div class="noUi-origin" style="left: 100%;">
+                                            <div class="noUi-handle noUi-handle-upper" data-handle="1" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="100.0" aria-valuenow="100.0" aria-valuetext="999.00" style="z-index: 4;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="input-number price-min">
+									{{ advanced_search.price_min }}
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+								<span>-</span>
+								<div class="input-number price-max">
+									{{ advanced_search.price_max }}
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->
+					</div>
+					<!-- /ASIDE -->
+
+					<!-- STORE -->
+					<div id="store" class="col-md-9">
+						<!-- store top filter -->
+						<div class="store-filter clearfix">
+							<div class="store-sort">
+								<label>
+									Sort By:
+									<select class="input-select">
+										<option value="0">Popular</option>
+										<option value="1">Position</option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<!-- /store top filter -->
+
+						<!-- store products -->
+						<div class="row">
+							<!-- product -->
+                            {% if products.exists %}
+                                {% for product in products %}
+                                    <div class="col-md-4 col-xs-6">
+							            {% include 'shop/_product.html' with product=product %}
+                                    </div>
+							    {% endfor %}
+                            {% else %}
+                                <h3>Таких товарів немає(</h3>
+                            {% endif %}
+							<!-- /product -->
+                        </div>
+					</div>
+					<!-- /STORE -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+{% endblock %}

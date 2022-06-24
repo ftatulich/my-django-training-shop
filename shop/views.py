@@ -1,8 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
-from .forms.product_forms import EditProductForm
-
 from .services.main_services import *
 from .services.login_sevices import *
 from .services.register_services import *
@@ -85,8 +83,9 @@ def edit_product(request, product_id: int):
     product = get_product_by_id(product_id)
     if product.seller != request.user:
         return redirect('home')
+
     if request.method == 'POST':
-        return save_product_changes_if_form_valid(request, product)
+        return save_edit_product_changes(request, product)
     form = EditProductForm(instance=product)
     return render(request, 'shop/edit_product.html', {'form': form})
 
