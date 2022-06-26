@@ -27,12 +27,13 @@ def register_page(request):
 def logout_user_page(request):
     """Вихід з системи"""
     logout(request)
+    messages.success(request, 'Ви вийшлі з облікового запису')
     return redirect('login')
 
 
 def product_info_page(request, product_id: int):
     """В'юшка для окремого товару"""
-    context = generate_product_page(product_id)
+    context = generate_product_page(product_id, request)
     return render(request, 'shop/product.html', context)
 
 
@@ -50,10 +51,11 @@ def categories_page(request):
 
 def seller_profile(request, username):
     """Сторінка адміністрування продавця"""
-    products = get_products_by_seller(username)
     if username == request.user.username:
+        products = get_products_by_seller(username)
         return render(request, 'shop/my_profile.html', {'products': products})
     else:
+        products = get_approved_products_by_seller(username)
         return render(request, 'shop/profile.html', {'username': username, 'products': products})
 
 
@@ -71,7 +73,7 @@ def add_product(request):
 def edit_profile(request):
     """Сторінка редагування профілю"""
     if request.method == 'POST':
-        return edit_profile(request)
+        return edit_profile_post(request)
     else:
         form = EditProfileForm(instance=request.user)
         return render(request, 'shop/edit_profile.html', {'form': form})
@@ -86,6 +88,7 @@ def edit_product(request, product_id: int):
 
     if request.method == 'POST':
         return save_edit_product_changes(request, product)
+
     form = EditProductForm(instance=product)
     return render(request, 'shop/edit_product.html', {'form': form})
 
@@ -98,4 +101,5 @@ def delete_product(request, product_id: int):
         return redirect('home')
 
     product.delete()
+    messages.success(request, "Товар було видалено")
     return redirect('home')

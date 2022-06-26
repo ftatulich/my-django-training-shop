@@ -19,6 +19,8 @@ ALLOWED_HOSTS = ['shopdjango.herokuapp.com', '*']
 
 # Application definition
 
+CSRF_TRUSTED_ORIGINS = ['https://2679-91-235-226-154.eu.ngrok.io']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

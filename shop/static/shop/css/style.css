@@ -55,6 +55,31 @@ Table OF Contents
 	Typography
 \*----------------------------*/
 
+.info {
+  color: darkgoldenrod;
+  background: rgba(255,255, 0, 0.6);
+  border: 3px solid gold;
+  padding: 15px;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+  padding: 15px;
+  font-weight: bold;
+  background: rgba(0,255,0, 0.6);
+  border: 3px solid forestgreen;
+}
+
+.error {
+  color: rgb(220,20,60);
+  padding: 15px;
+  font-weight: bold;
+  background: rgb(220,20,60, 0.3);
+  border: 3px solid rgb(220,20,60);
+}
+
+
 body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;

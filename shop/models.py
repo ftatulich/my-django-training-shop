@@ -35,6 +35,7 @@ class Product(models.Model):
     date = models.DateField('Product publicattion date', auto_now=True)
     category = models.ForeignKey('Category', related_name='product', on_delete=models.PROTECT, db_index=True)
     preview = models.ImageField(verbose_name='products preview', upload_to='photos/products/%Y/%m/%d')
+    approved = models.BooleanField(default=False)
     seller = models.ForeignKey('CustomUser', verbose_name='Автор оголошення', on_delete=models.PROTECT)
 
     def __str__(self):

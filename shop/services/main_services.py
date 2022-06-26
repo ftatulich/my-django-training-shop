@@ -7,7 +7,7 @@ from shop.models import Product, Category
 def generate_category_page(category_name: str) -> dict:
     """Повертає інфу всіх товарів деякої категорії"""
     try:
-        products = Product.objects.filter(category__name=category_name).prefetch_related('images')
+        products = Product.objects.filter(category__name=category_name, approved=True).prefetch_related('images')
     except Product.DoesNotExist:
         raise Http404('No %s matches the given query.')
 
@@ -26,10 +26,11 @@ def home_page_logic(request) -> dict:
     top_sell_category = request.GET.get('topsellcategory') or "Ноутбуки"
 
     try:
-        recently_products = Product.objects.select_related('category').filter(category__name=active_category).order_by(
-            'date')
+        recently_products = Product.objects.select_related('category')\
+            .filter(category__name=active_category, approved=True).order_by('date')
+
         top_sell_products = Product.objects.select_related('category').filter(
-            category__name=top_sell_category).order_by('-date')
+            category__name=top_sell_category, approved=True).order_by('-date')
 
     except Product.DoesNotExist:
         raise Http404('No %s matches the given query.')

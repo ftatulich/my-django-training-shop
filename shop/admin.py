@@ -23,7 +23,7 @@ class ImagesInline(admin.StackedInline):
 
 class ProductAdmin(admin.ModelAdmin):
     model = Product
-    list_display = ('name', 'price', 'amount', 'preview')
+    list_display = ('name', 'price', 'amount', 'preview', 'approved')
     inlines = [ImagesInline]
 
 

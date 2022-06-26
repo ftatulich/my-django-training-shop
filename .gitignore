@@ -3,3 +3,6 @@ db.sqlite3
 **/__pycache__/
 venv
 media
+Procfile
+runtime.txt
+media

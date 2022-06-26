@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -39,6 +40,7 @@ def _login_user(request, email: str, password: str, login_form: LoginForm):
 
         if user.check_password(password):
             login(request, user)
+            messages.success(request, 'Ви ввійшли!')
             return redirect('home')
         else:
             login_form.add_error(field=None, error='Не правильний логін чи пароль')
