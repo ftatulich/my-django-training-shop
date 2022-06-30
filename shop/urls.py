@@ -1,7 +1,5 @@
-from django.conf.urls.static import static
 from django.urls import path
 
-from DjangoShop import settings
 from .views import *
 
 urlpatterns = [
@@ -9,6 +7,8 @@ urlpatterns = [
     path('login/', login_user_page, name='login'),
     path('logout/', logout_user_page, name='logout'),
     path('register/', register_page, name='register'),
+    path('change_permissions/<int:user_id>', change_permissions, name='change_permission'),
+    path('moderation/', moderation, name='moderation'),
     path('products/<int:product_id>/', product_info_page, name='product'),
     path('products/<int:product_id>/delete', delete_product, name='delete_product'),
     path('products/<int:product_id>/edit', edit_product, name='edit_product'),
@@ -17,4 +17,5 @@ urlpatterns = [
     path('profile/<str:username>', seller_profile, name='profile'),
     path('addproduct/', add_product, name='add_product'),
     path('editprofile/', edit_profile, name='edit_profile'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('approve/<int:product_id>', approve, name='approve'),
+]

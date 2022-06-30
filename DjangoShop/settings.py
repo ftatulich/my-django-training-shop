@@ -1,7 +1,11 @@
 import os.path
 from pathlib import Path
-import dj_database_url
 
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,8 +21,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['shopdjango.herokuapp.com', '*']
 
-# Application definition
-
+# Application definiti
 CSRF_TRUSTED_ORIGINS = ['https://2679-91-235-226-154.eu.ngrok.io']
 
 INSTALLED_APPS = [
@@ -72,7 +75,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'DjangoShop.wsgi.application'
 
@@ -132,7 +134,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-LOGIN_URL = 'login/'
+LOGIN_URL = '/login/'
 
 AUTH_USER_MODEL = 'shop.CustomUser'
 
@@ -142,3 +144,12 @@ INTERNAL_IPS = [
 
 CART_SESSION_ID = 'cart'
 WISHLIST_SESSION_ID = 'wishlist'
+
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+

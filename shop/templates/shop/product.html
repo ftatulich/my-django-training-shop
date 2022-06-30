@@ -68,6 +68,17 @@
                         </form>
                     </div>
 
+                        {% if product.seller == request.user %}
+                        <div class="product-btns">
+                            {% if not product.approved %}
+                                <li>Ваш товар ще не був розглянутий</li>
+                            {% else  %}
+                                <li>Ваш товар підверджено</li>
+                            {% endif %}
+                        </div>
+                            <hr>
+                        {% endif %}
+
                     <ul class="product-btns">
                         {% if product not in wishlist %}
                             <li><a href="{% url 'add_wishlist' product.id %}"><i class="fa fa-heart-o"></i> В список уподобань</a></li>
@@ -77,6 +88,12 @@
                         {% if product.seller == request.user %}
                             <li><a href="{% url 'edit_product' product.id %}">Редагувати</a></li>
                             <li><a href="{% url 'delete_product' product.id %}">Видалити</a></li>
+                        {% endif %}
+                        {% if perms.shop.change_product %}
+                          <li><a href="{% url 'delete_product' product.id %}">Видалити</a></li>
+                            {% if not product.approved %}
+                                <li><a href="{% url 'approve' product.id %}">Підвердити</a></li>
+                            {% endif %}
                         {% endif %}
                     </ul>
 

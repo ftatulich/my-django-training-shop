@@ -51,7 +51,9 @@
                     #5 ЧНУ ім. Ю. Федьковича</a></li>
             </ul>
             <ul class="header-links pull-right">
-                <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+                {% if perms %}
+                    <li><a href="{% url 'moderation' %}">Модерування</a></li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'profile' request.user.username %}"><i class="fa fa-user-o"></i> Мій профіль</a>
                     </li>

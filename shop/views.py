@@ -1,6 +1,11 @@
+
+
+from django.contrib.auth.models import Permission
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 
+from .forms.profile_forms import ChangePermissionsForm
 from .services.main_services import *
 from .services.login_sevices import *
 from .services.register_services import *
@@ -97,9 +102,75 @@ def edit_product(request, product_id: int):
 def delete_product(request, product_id: int):
     """Видаляє пост"""
     product = get_product_by_id(product_id)
-    if product.seller != request.user:
+
+    if request.user.has_perm('change_product') or product.seller == request.user:
+        send_mail(
+            subject='Ваш товар було видалено',
+            message='Ви видалили ваш товар, або його було видалено з нашої платформи за порушення правил',
+            recipient_list=[product.seller.email],
+            from_email='kartieltv@gmail.com',
+        )
+
+        product.delete()
+        messages.success(request, "Товар було видалено")
+        return redirect('home')
+    else:
+        messages.error(request, "У вас немає необхідних прав.")
         return redirect('home')
 
-    product.delete()
-    messages.success(request, "Товар було видалено")
-    return redirect('home')
+
+@login_required
+def change_permissions(request, user_id: int):
+    if request.user.has_perm('auth.change_permission') and request.user.id != user_id:
+        user = get_object_or_404(CustomUser, pk=user_id)
+
+        if request.method == "POST":
+            form = ChangePermissionsForm(request.POST)
+
+            if form.is_valid():
+                form_permissions = form.cleaned_data.get('permissions')
+                permissions = Permission.objects.filter(codename__in=form_permissions)
+                user.user_permissions.set(permissions)
+
+                messages.success(request, 'Права Успішно додані')
+                return redirect(reverse('change_permission', args=[user_id]))
+            else:
+                messages.error(request, 'Змініть права')
+                return redirect(reverse('change_permission', args=[user_id]))
+        else:
+            permissions = []
+            for perm in user.user_permissions.all():
+                permissions.append(perm.codename)
+
+            form = ChangePermissionsForm(initial={
+                'permissions': permissions
+            })
+
+            return render(request, 'shop/change_permissions.html', {'form': form, 'user': user})
+    else:
+        messages.error(request, 'У вас немає прав для цієї дії')
+        return redirect('home')
+
+
+@login_required
+def moderation(request):
+    context = dict()
+    if request.user.has_perm('add_product'):
+        context.update({
+            'products': Product.objects.filter(approved=False)
+        })
+
+    return render(request, 'shop/moderation.html', context)
+
+
+@login_required
+def approve(request, product_id: int):
+    if request.user.has_perm('change_product'):
+        product = get_product_by_id(product_id)
+        product.approved = True
+        product.save()
+        return redirect(reverse('product', args=[product_id]))
+    else:
+        messages.error(request, 'Ви не маєте необхідних прав.')
+        return redirect('home')
+

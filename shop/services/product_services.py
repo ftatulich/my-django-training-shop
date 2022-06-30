@@ -11,7 +11,7 @@ def generate_product_page(product_id: int, request) -> dict:
     """Бере з БД інфу для продукту, і рендерить шаблон для сторінки цього продукту"""
     product = get_product_by_id(product_id)
 
-    if product.seller != request.user:
+    if product.seller != request.user and not request.user.has_perms('change_products'):
         product = get_approved_product_by_id(product_id)
 
     try:

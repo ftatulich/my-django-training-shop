@@ -132,3 +132,14 @@ class EditProfileForm(forms.ModelForm):
                                                'placeholder': "Поштовий Індекс"
                                                }),
         }
+
+
+class ChangePermissionsForm(forms.Form):
+    PERMISSIONS = (
+        ('change_permission', 'Змінювати права інших користувачів'),
+        ('delete_customuser', 'Видаляти Користувачів'),
+        ('change_products', 'Схвалювати Товари'),
+        ('change_category', 'Додавати категорії'),
+    )
+
+    permissions = forms.MultipleChoiceField(choices=PERMISSIONS, widget=forms.CheckboxSelectMultiple(), required=False)

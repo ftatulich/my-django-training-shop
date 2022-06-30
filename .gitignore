@@ -6,3 +6,4 @@ media
 Procfile
 runtime.txt
 media
+.env

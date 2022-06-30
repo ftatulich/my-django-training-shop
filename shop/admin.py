@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Permission
 
 from .forms.profile_forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser, Product, Gallery, Category
@@ -36,3 +37,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Permission)
